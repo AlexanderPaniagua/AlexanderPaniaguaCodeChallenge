@@ -92,6 +92,7 @@ extension OffersViewController {
             self.hideLoader()
             if succeded {
                 self.offersDataList = offersResponseModel
+                self.updateUI()
                 self.offersTableView.reloadData()
             }
             else {
@@ -127,6 +128,7 @@ extension OffersViewController {
     
     private func searchAndRefreshResults(searchString: String) {
         self.filteredOffersDataList = self.searchForResults(searchString: searchString)
+        self.updateUI()
         self.offersTableView.reloadData()
     }
     
@@ -134,11 +136,33 @@ extension OffersViewController {
         self.isSearching = false
         self.customSearchBar.text = ""
         self.filteredOffersDataList = [OfferDetailsModel]()
+        self.updateUI()
         self.offersTableView.reloadData()
     }
     
     private func goToOfferDetailsScreen() {
         self.performSegue(withIdentifier: "goToOfferDetailsScreen", sender: nil)
+    }
+    
+    private func getOffersCount() -> Int {
+        var counter = 0
+        
+        guard let sections = self.offersDataList else {
+            return 0
+        }
+        
+        for section in sections {
+            if let items = section.items {
+                counter += items.count
+            }
+        }
+        
+        return counter
+    }
+    
+    private func updateUI() {
+        let currentOffersCount = self.isSearching ? self.filteredOffersDataList.count : self.getOffersCount()
+        self.offerCountLabel.text = "\(currentOffersCount) offers"
     }
     
 }
