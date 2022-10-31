@@ -17,6 +17,10 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     // MARK: Class props
     var spinner = UIActivityIndicatorView(style: .large)
     

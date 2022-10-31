@@ -78,6 +78,12 @@ class OffersViewController: BaseViewController {
         self.performRequests()
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true;
+    }
+    
 }
 
 // MARK: Extensions
@@ -169,6 +175,10 @@ extension OffersViewController {
 
 // MARK: UISearchBarDelegate extensions
 extension OffersViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.customSearchBar.endEditing(true)
+    }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.navigationController?.isNavigationBarHidden = false
